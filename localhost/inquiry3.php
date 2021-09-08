@@ -1,0 +1,42 @@
+<!doctype html>
+ <html lang="ru">
+ <?php
+     include('connection1.php');
+    ?>
+ <head>
+     <meta charset="utf-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="css/style.css">
+     <title>Последний найм</title>
+ </head>
+<body>
+
+    <div class="container mtb-3">
+        <div class="table-responsive">
+
+<?php
+
+$inquiry3=$pdo->query ("SELECT   p.description, concat( u.last_name,' ',u.first_name) as fl, u.created_at
+FROM (SELECT up.department_id, d.description, max(up.user_id) as userid FROM user_position up
+left join department d on
+up.department_id=d.id
+group by up.department_id) p
+join user u on p.userid = u.id");
+
+$table3 = '<table class="table", style="float: left;" >';
+$table3.='<tr><th>Фамилия Имя</th><th>Дата найма</th><th>Отдел</th></tr> ';
+    while ($res3= $inquiry3->fetch()){
+        $table3.='<tr><td>'.$res3['fl'].'</td>
+        <td>'.$res3['created_at'].'</td>
+        <td>'.$res3['description'].'</td></tr>';
+    }
+    $table3.='</table>';
+    echo $table3;
+
+?>
+
+	  </div>
+    </div>
+</body>
+
+</html>
