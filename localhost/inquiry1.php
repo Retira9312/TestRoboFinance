@@ -14,10 +14,10 @@
     <div class="container mtb-3">
         <div class="table-responsive">
 <?php
-
+//запрос по отбору сотрудников, отработавших менее 90 дней
 	$inquiry1 =$pdo->query("SELECT user.first_name,user.last_name,user.created_at FROM `user` WHERE DATEDIFF(CURDATE(), created_at) <= 90 ORDER BY user.last_name");
 
-
+//создаем переменную и помещаем в нее результат запроса, преобразованный в таблицу
 	$table1 = '<table class="table">';
 	$table1.='<tr><th>Фамилия</th><th>Имя</th><th>Дата приема</th></tr> ';
 	while ($res1 = $inquiry1->fetch()){
