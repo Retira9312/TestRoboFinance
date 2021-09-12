@@ -2,6 +2,8 @@
  <html lang="ru">
  <?php
 	 include('connection1.php');
+	 include('table.php');
+
     ?>
  <head>
      <meta charset="utf-8">
@@ -17,16 +19,13 @@
 //запрос по отбору сотрудников, отработавших менее 90 дней
 	$inquiry1 =$pdo->query("SELECT user.first_name,user.last_name,user.created_at FROM `user` WHERE DATEDIFF(CURDATE(), created_at) <= 90 ORDER BY user.last_name");
 
-//создаем переменную и помещаем в нее результат запроса, преобразованный в таблицу
-	$table1 = '<table class="table">';
-	$table1.='<tr><th>Фамилия</th><th>Имя</th><th>Дата приема</th></tr> ';
-	while ($res1 = $inquiry1->fetch()){
-		$table1.='<tr><td>'.$res1['last_name'].'</td>
-		<td>'.$res1['first_name'].'</td>
-		<td>'.$res1['created_at'].'</td></tr>';
-	}
-	$table1.='</table>';
-	echo $table1;
+
+
+
+//создаем переменную с помощью класса Table и помещаем в нее результат запроса, преобразованный в таблицу
+
+	$table1 = new Table;
+	echo $table1->getTable1($inquiry1, 'Фамилия','Имя', 'Дата приема', 'last_name', 'first_name', 'created_at');
 ?>
 
 
